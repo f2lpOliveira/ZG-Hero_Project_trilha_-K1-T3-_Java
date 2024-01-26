@@ -1,58 +1,71 @@
 package tarefa;
 
 public class CriarTarefa {
-
-    // Atributos
     private String nome;
     private String descricao;
     private String dataDeTermino;
-    private int nivelDePrioridade;
+    private int prioridade;
     private String categoria;
     private String status;
 
     // Construtor
-    public CriarTarefa(String nome, String descricao, String dataDeTermino, int nivelDePrioridade, String categoria, String status) {
+    public CriarTarefa(String nome, String descricao, String dataDeTermino, int prioridade, String categoria, String status) {
         this.nome = nome;
         this.descricao = descricao;
         this.dataDeTermino = dataDeTermino;
-        this.nivelDePrioridade = nivelDePrioridade;
+        this.prioridade = prioridade;
         this.categoria = categoria;
         this.status = status;
     }
 
-    // Metodos
-    public void tarefaCadastrada(){
-        System.out.println("Tarefa: " + getNome());
-        System.out.println("Descrição: " + getDescricao());
-        System.out.println("Data do Término: " + getDataDeTermino());
-        System.out.println("Prioridade: " + getNivelDePrioridade());
-        System.out.println("Categoria: " + getCategoria());
-        System.out.println("Status: " + getStatus());
-    }
-    private String getNome() {
+    // Métodos Getter
+    public String getNome() {
         return nome;
     }
 
-    private String getDescricao() {
+    public String getDescricao() {
         return descricao;
     }
 
-    private String getDataDeTermino() {
+    public String getDataDeTermino() {
         return dataDeTermino;
     }
 
-    private int getNivelDePrioridade() {
-        return nivelDePrioridade;
+    public int getPrioridade() {
+        return prioridade;
     }
 
-    private String getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    private String getStatus() {
+    public String getStatus() {
         return status;
     }
 
-}
+    // Métodos Setter
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setDataDeTermino(String dataDeTermino) {
+        this.dataDeTermino = dataDeTermino;
+    }
+
+    public void setPrioridade(int prioridade) {
+        this.prioridade = prioridade;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+}
 
