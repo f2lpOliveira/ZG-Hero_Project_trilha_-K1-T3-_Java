@@ -1,5 +1,7 @@
 package menu;
 
+import tarefas.Tarefa;
+
 import java.util.Scanner;
 
 public class MenuIterativo {
