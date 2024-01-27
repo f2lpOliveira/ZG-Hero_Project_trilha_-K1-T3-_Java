@@ -1,5 +1,9 @@
 package tarefas;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Tarefa {
     // Atributos
     private String nome;
@@ -8,6 +12,8 @@ public class Tarefa {
     private int prioridade;
     private String categoria;
     private String status;
+
+    private static List<Tarefa> listaDeTarefas = new ArrayList<>();
 
     // Construtor
     public Tarefa(String nome, String descricao, String dataDeTermino, int prioridade, String categoria, String status) {
@@ -19,6 +25,43 @@ public class Tarefa {
         this.status = status;
     }
 
+    public static List<Tarefa> getListaDeTarefas() {
+        return listaDeTarefas;
+    }
+
+    // Métodos
+    public static void criarTarefa() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Nome da tarefa: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("Descrição da tarefa: ");
+        String descricao = scanner.nextLine();
+
+        System.out.print("Data de término da tarefa: ");
+        String dataDeTermino = scanner.nextLine();
+
+        System.out.print("Prioridade da tarefa (1-5): ");
+        int prioridade = scanner.nextInt();
+        scanner.nextLine(); // Consumir a quebra de linha pendente
+
+        System.out.print("Categoria da tarefa: ");
+        String categoria = scanner.nextLine();
+
+        System.out.print("Status da tarefa: ");
+        String status = scanner.nextLine();
+
+        // Criar uma nova instância de Tarefa
+        Tarefa novaTarefa = new Tarefa(nome, descricao, dataDeTermino, prioridade, categoria, status);
+
+        // Adicionar a nova tarefa à lista de tarefas
+        listaDeTarefas.add(novaTarefa);
+
+        System.out.println("Tarefa criada com sucesso!");
+    }
+
+    // Métodos Getters e Setters
     public String getNome() {
         return nome;
     }
