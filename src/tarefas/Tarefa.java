@@ -1,6 +1,7 @@
 package tarefas;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,7 +30,9 @@ public class Tarefa {
         return listaDeTarefas;
     }
 
-    // Métodos
+    // Métodos da regra de negócio
+
+    // Método para criar uma tarefa
     public static void criarTarefa() {
         Scanner scanner = new Scanner(System.in);
 
@@ -59,6 +62,36 @@ public class Tarefa {
         listaDeTarefas.add(novaTarefa);
 
         System.out.println("Tarefa criada com sucesso!");
+    }
+
+    // Método para excluir uma tarefa com base no nome
+    public static void excluirTarefa() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite o nome da tarefa que deseja excluir: ");
+        String nomeTarefaExcluir = scanner.nextLine();
+
+        Iterator<Tarefa> iterator = listaDeTarefas.iterator();
+
+        boolean encontrou = false;
+
+        // Percorre a lista de tarefas
+        while (iterator.hasNext()) {
+            Tarefa novaTarefa = iterator.next();
+
+            // Verifica se o nome da tarefa coincide com o fornecido pelo usuário
+            if (novaTarefa.getNome().equalsIgnoreCase(nomeTarefaExcluir)) {
+                iterator.remove();
+                encontrou = true;
+                System.out.println("Tarefa excluída com sucesso!");
+                break; // Se encontrou a tarefa, podemos sair do loop
+            }
+        }
+
+        // Se não encontrou a tarefa
+        if (!encontrou) {
+            System.out.println("Tarefa não encontrada. Verifique o nome e tente novamente.");
+        }
     }
 
     // Métodos Getters e Setters
