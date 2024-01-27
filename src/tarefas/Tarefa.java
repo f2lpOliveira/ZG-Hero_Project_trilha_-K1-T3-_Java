@@ -65,10 +65,76 @@ public class Tarefa {
     }
 
     // Método para listar tarefas
+
+    // Método para listar tarefas por categoria, prioridade ou status
     public static void listarTarefas() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Escolha uma opção para listar tarefas:");
+        System.out.println("1. Por Categoria");
+        System.out.println("2. Por Prioridade");
+        System.out.println("3. Por Status");
+        System.out.println("4. Todas");
+        System.out.print("Digite o número da opção desejada (1-4): ");
+
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // Consumir a quebra de linha pendente
+
+        switch (opcao) {
+            case 1:
+                listarPorCategoria();
+                break;
+            case 2:
+                listarPorPrioridade();
+                break;
+            case 3:
+                listarPorStatus();
+                break;
+            case 4:
+                listarTodas();
+                break;
+            default:
+                System.out.println("Opção inválida. Tente novamente.");
+        }
+    }
+
+    public static void listarTodas() {
 
         for (Tarefa tarefa : listaDeTarefas) {
             exibirDetalhesTarefa(tarefa);
+        }
+    }
+
+    private static void listarPorCategoria() {
+        System.out.print("Digite a categoria desejada: ");
+        String categoria = new Scanner(System.in).nextLine();
+
+        for (Tarefa tarefa : listaDeTarefas) {
+            if (tarefa.getCategoria().equalsIgnoreCase(categoria)) {
+                exibirDetalhesTarefa(tarefa);
+            }
+        }
+    }
+
+    private static void listarPorPrioridade() {
+        System.out.print("Digite a prioridade desejada (1-5): ");
+        int prioridade = new Scanner(System.in).nextInt();
+
+        for (Tarefa tarefa : listaDeTarefas) {
+            if (tarefa.getPrioridade() == prioridade) {
+                exibirDetalhesTarefa(tarefa);
+            }
+        }
+    }
+
+    private static void listarPorStatus() {
+        System.out.print("Digite o status desejado: ");
+        String status = new Scanner(System.in).nextLine();
+
+        for (Tarefa tarefa : listaDeTarefas) {
+            if (tarefa.getStatus().equalsIgnoreCase(status)) {
+                exibirDetalhesTarefa(tarefa);
+            }
         }
     }
 
