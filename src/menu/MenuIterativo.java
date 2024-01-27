@@ -31,7 +31,7 @@ public class MenuIterativo {
 //                    Tarefa.listarTarefas();
                     break;
                 case 3:
-//                    Tarefa.excluirTarefa();
+                    Tarefa.excluirTarefa();
                     break;
                 case 4:
                     System.out.println("Saindo do programa. Até mais!");
