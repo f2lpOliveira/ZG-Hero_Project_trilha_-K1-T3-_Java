@@ -28,7 +28,7 @@ public class MenuIterativo {
                     Tarefa.criarTarefa();
                     break;
                 case 2:
-//                    Tarefa.listarTarefas();
+                    Tarefa.listarTarefas();
                     break;
                 case 3:
                     Tarefa.excluirTarefa();
