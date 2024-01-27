@@ -64,6 +64,25 @@ public class Tarefa {
         System.out.println("Tarefa criada com sucesso!");
     }
 
+    // Método para listar tarefas
+    public static void listarTarefas() {
+
+        for (Tarefa tarefa : listaDeTarefas) {
+            exibirDetalhesTarefa(tarefa);
+        }
+    }
+
+    // Método para retornar os dados da tarefa
+    private static void exibirDetalhesTarefa(Tarefa tarefa) {
+        System.out.println("Nome: " + tarefa.getNome());
+        System.out.println("Descrição: " + tarefa.getDescricao());
+        System.out.println("Data de Término: " + tarefa.getDataDeTermino());
+        System.out.println("Prioridade: " + tarefa.getPrioridade());
+        System.out.println("Categoria: " + tarefa.getCategoria());
+        System.out.println("Status: " + tarefa.getStatus());
+        System.out.println("---------------");
+    }
+
     // Método para excluir uma tarefa com base no nome
     public static void excluirTarefa() {
         Scanner scanner = new Scanner(System.in);
