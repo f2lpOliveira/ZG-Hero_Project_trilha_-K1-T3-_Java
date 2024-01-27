@@ -1,20 +1,17 @@
 package tarefas;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Tarefa {
     // Atributos
-    private String nome;
-    private String descricao;
-    private String dataDeTermino;
-    private int prioridade;
-    private String categoria;
-    private String status;
+    private final String nome;
+    private final String descricao;
+    private final String dataDeTermino;
+    private final int prioridade;
+    private final String categoria;
+    private final String status;
 
-    private static List<Tarefa> listaDeTarefas = new ArrayList<>();
+    private final static List<Tarefa> listaDeTarefas = new ArrayList<>();
 
     // Construtor
     public Tarefa(String nome, String descricao, String dataDeTermino, int prioridade, String categoria, String status) {
@@ -26,12 +23,7 @@ public class Tarefa {
         this.status = status;
     }
 
-    public static List<Tarefa> getListaDeTarefas() {
-        return listaDeTarefas;
-    }
-
     // Métodos da regra de negócio
-
     // Método para criar uma tarefa
     public static void criarTarefa() {
         Scanner scanner = new Scanner(System.in);
@@ -99,6 +91,8 @@ public class Tarefa {
     }
 
     public static void listarTodas() {
+        // Ordena a lista de tarefas com base na prioridade (decrescente)
+        Collections.sort(listaDeTarefas, Comparator.comparingInt(Tarefa::getPrioridade).reversed());
 
         for (Tarefa tarefa : listaDeTarefas) {
             exibirDetalhesTarefa(tarefa);
@@ -184,48 +178,24 @@ public class Tarefa {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getDescricao() {
         return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public String getDataDeTermino() {
         return dataDeTermino;
     }
 
-    public void setDataDeTermino(String dataDeTermino) {
-        this.dataDeTermino = dataDeTermino;
-    }
-
     public int getPrioridade() {
         return prioridade;
-    }
-
-    public void setPrioridade(int prioridade) {
-        this.prioridade = prioridade;
     }
 
     public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
     public String getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }
 
