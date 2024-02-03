@@ -1,23 +1,26 @@
 package tarefas;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Tarefa {
     // Atributos
     private final String nome;
     private final String descricao;
-    private final String dataDeTermino;
+    private final LocalDate dataDeTermino;
     private final int prioridade;
     private final String categoria;
     private final String status;
 
     private final static List<Tarefa> listaDeTarefas = new ArrayList<>();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     // Construtor
     public Tarefa(String nome, String descricao, String dataDeTermino, int prioridade, String categoria, String status) {
         this.nome = nome;
         this.descricao = descricao;
-        this.dataDeTermino = dataDeTermino;
+        this.dataDeTermino = LocalDate.parse(dataDeTermino, formatter);
         this.prioridade = prioridade;
         this.categoria = categoria;
         this.status = status;
@@ -183,7 +186,7 @@ public class Tarefa {
     }
 
     public String getDataDeTermino() {
-        return dataDeTermino;
+        return formatter.format(dataDeTermino);
     }
 
     public int getPrioridade() {
