@@ -95,7 +95,7 @@ public class Tarefa {
 
     public static void listarTodas() {
         // Ordena a lista de tarefas com base na prioridade (decrescente)
-        Collections.sort(listaDeTarefas, Comparator.comparingInt(Tarefa::getPrioridade).reversed());
+        listaDeTarefas.sort(Comparator.comparingInt(Tarefa::getPrioridade).reversed());
 
         for (Tarefa tarefa : listaDeTarefas) {
             exibirDetalhesTarefa(tarefa);
