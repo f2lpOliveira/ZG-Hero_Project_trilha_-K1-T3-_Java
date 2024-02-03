@@ -37,7 +37,7 @@ public class Tarefa {
         System.out.print("Descrição da tarefa: ");
         String descricao = scanner.nextLine();
 
-        System.out.print("Data de término da tarefa: ");
+        System.out.print("Data de término da tarefa (DD/MM/YYYY): ");
         String dataDeTermino = scanner.nextLine();
 
         System.out.print("Prioridade da tarefa (1-5): ");
@@ -47,7 +47,7 @@ public class Tarefa {
         System.out.print("Categoria da tarefa: ");
         String categoria = scanner.nextLine();
 
-        System.out.print("Status da tarefa: ");
+        System.out.print("Status da tarefa (ToDo, Doing e Done): ");
         String status = scanner.nextLine();
 
         // Criar uma nova instância de Tarefa
@@ -60,8 +60,6 @@ public class Tarefa {
     }
 
     // Método para listar tarefas
-
-    // Método para listar tarefas por categoria, prioridade ou status
     public static void listarTarefas() {
         Scanner scanner = new Scanner(System.in);
 
@@ -93,6 +91,7 @@ public class Tarefa {
         }
     }
 
+    // Método para listar tarefas por categoria, prioridade ou status
     public static void listarTodas() {
         // Ordena a lista de tarefas com base na prioridade (decrescente)
         listaDeTarefas.sort(Comparator.comparingInt(Tarefa::getPrioridade).reversed());
@@ -101,7 +100,6 @@ public class Tarefa {
             exibirDetalhesTarefa(tarefa);
         }
     }
-
     private static void listarPorCategoria() {
         System.out.print("Digite a categoria desejada: ");
         String categoria = new Scanner(System.in).nextLine();
@@ -112,7 +110,6 @@ public class Tarefa {
             }
         }
     }
-
     private static void listarPorPrioridade() {
         System.out.print("Digite a prioridade desejada (1-5): ");
         int prioridade = new Scanner(System.in).nextInt();
@@ -123,7 +120,6 @@ public class Tarefa {
             }
         }
     }
-
     private static void listarPorStatus() {
         System.out.print("Digite o status desejado: ");
         String status = new Scanner(System.in).nextLine();
@@ -150,6 +146,7 @@ public class Tarefa {
     public static void excluirTarefa() {
         Scanner scanner = new Scanner(System.in);
 
+        listarTodas();
         System.out.print("Digite o nome da tarefa que deseja excluir: ");
         String nomeTarefaExcluir = scanner.nextLine();
 
