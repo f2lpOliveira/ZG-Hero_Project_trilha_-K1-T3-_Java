@@ -14,6 +14,7 @@ public class Tarefa {
     private final String status;
 
     private final static List<Tarefa> listaDeTarefas = new ArrayList<>();
+
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     // Construtor
