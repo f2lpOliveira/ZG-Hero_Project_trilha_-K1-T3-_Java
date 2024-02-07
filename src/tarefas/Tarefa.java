@@ -44,10 +44,10 @@ public class Tarefa {
         int prioridade = scanner.nextInt();
         scanner.nextLine(); // Consumir a quebra de linha pendente
 
-        System.out.print("Categoria da tarefa: ");
+        System.out.print("Categoria da tarefa (Casa ou Trabalho): ");
         String categoria = scanner.nextLine();
 
-        System.out.print("Status da tarefa (ToDo, Doing e Done): ");
+        System.out.print("Status da tarefa (ToDo, Doing ou Done): ");
         String status = scanner.nextLine();
 
         // Criar uma nova instância de Tarefa
@@ -101,12 +101,17 @@ public class Tarefa {
         }
     }
     private static void listarPorCategoria() {
-        System.out.print("Digite a categoria desejada: ");
+        System.out.print("Digite a categoria desejada (Casa ou Trabalho): ");
         String categoria = new Scanner(System.in).nextLine();
+
+        listaDeTarefas.sort(Comparator.comparingInt(Tarefa::getPrioridade).reversed());
 
         for (Tarefa tarefa : listaDeTarefas) {
             if (tarefa.getCategoria().equalsIgnoreCase(categoria)) {
                 exibirDetalhesTarefa(tarefa);
+            } else {
+                System.out.println("Não há nenhuma tarefa com a categoria " + categoria);
+                break;
             }
         }
     }
@@ -114,32 +119,31 @@ public class Tarefa {
         System.out.print("Digite a prioridade desejada (1-5): ");
         int prioridade = new Scanner(System.in).nextInt();
 
+        listaDeTarefas.sort(Comparator.comparingInt(Tarefa::getPrioridade).reversed());
+
         for (Tarefa tarefa : listaDeTarefas) {
             if (tarefa.getPrioridade() == prioridade) {
                 exibirDetalhesTarefa(tarefa);
+            } else {
+                System.out.println("Não há nenhuma tarefa de prioridade " + prioridade);
+                break;
             }
         }
     }
     private static void listarPorStatus() {
-        System.out.print("Digite o status desejado: ");
+        System.out.print("Digite o status desejado (ToDo, Doing ou Done): ");
         String status = new Scanner(System.in).nextLine();
+
+        listaDeTarefas.sort(Comparator.comparingInt(Tarefa::getPrioridade).reversed());
 
         for (Tarefa tarefa : listaDeTarefas) {
             if (tarefa.getStatus().equalsIgnoreCase(status)) {
                 exibirDetalhesTarefa(tarefa);
+            } else {
+                System.out.println("Não há nenhuma tarefa com o status " + status);
+                break;
             }
         }
-    }
-
-    // Método para retornar os dados da tarefa
-    private static void exibirDetalhesTarefa(Tarefa tarefa) {
-        System.out.println("Nome: " + tarefa.getNome());
-        System.out.println("Descrição: " + tarefa.getDescricao());
-        System.out.println("Data de Término: " + tarefa.getDataDeTermino());
-        System.out.println("Prioridade: " + tarefa.getPrioridade());
-        System.out.println("Categoria: " + tarefa.getCategoria());
-        System.out.println("Status: " + tarefa.getStatus());
-        System.out.println("---------------");
     }
 
     // Método para excluir uma tarefa com base no nome
@@ -171,6 +175,17 @@ public class Tarefa {
         if (!encontrou) {
             System.out.println("Tarefa não encontrada. Verifique o nome e tente novamente.");
         }
+    }
+
+    // Método para retornar os dados da tarefa
+    private static void exibirDetalhesTarefa(Tarefa tarefa) {
+        System.out.println("Nome: " + tarefa.getNome());
+        System.out.println("Descrição: " + tarefa.getDescricao());
+        System.out.println("Data de Término: " + tarefa.getDataDeTermino());
+        System.out.println("Prioridade: " + tarefa.getPrioridade());
+        System.out.println("Categoria: " + tarefa.getCategoria());
+        System.out.println("Status: " + tarefa.getStatus());
+        System.out.println("---------------");
     }
 
     // Métodos Getters e Setters
