@@ -13,37 +13,47 @@
 <h1>ToDo List</h1>
 <hr>
 
-<form action="">
-    <label for="nome">Nome</label>
-    <input type="text" id="nome">
+<form name="form1" action="#" method="post" class="row g-3 needs-validation" novalidate>
+    <div class="col-md-6">
+        <div class="row g-3">
+            <div class="col-md-12">
+                <label for="nome" class="form-label">Nome</label>
+                <input type="text" id="nome" class="form-control" placeholder="Nome da tarefa..." required>
+                <div class="invalid-feedback">Informe o nome da tarefa.</div>
+            </div>
 
-    <label for="descricao">Descrição</label>
-    <input type="text" id="descricao">
+            <label for="descricao">Descrição</label>
+            <input type="text" id="descricao">
 
-    <label for="dataTermino">Data de Término</label>
-    <input type="date" id="dataTermino" pattern="\d{4}">
+            <label for="dataTermino">Data de Término</label>
+            <input type="date" id="dataTermino" pattern="\d{4}">
 
-    <label for="prioridade">Prioridade</label>
-    <select id="prioridade">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select>
+            <label for="prioridade">Prioridade</label>
+            <select id="prioridade">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
 
-    <label for="categoria">Categoria</label>
-    <select id="categoria">
-        <option value="Casa" selected>Casa</option>
-        <option value="Trabalho">Trabalho</option>
-    </select>
+            <label for="categoria">Categoria</label>
+            <select id="categoria">
+                <option value="Casa" selected>Casa</option>
+                <option value="Trabalho">Trabalho</option>
+            </select>
 
-    <label for="status">Status</label>
-    <select id="status">
-        <option value="ToDo" selected>ToDo</option>
-        <option value="Doing">Doing</option>
-        <option value="Done">Done</option>
-    </select>
+            <label for="status">Status</label>
+            <select id="status">
+                <option value="ToDo" selected>ToDo</option>
+                <option value="Doing">Doing</option>
+                <option value="Done">Done</option>
+            </select>
+        </div>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <input type="submit" class="btn btn-success me-md-2" value="Criar Tarefa" id="btnCriar">
+    </div>
 </form>
 
 </body>
