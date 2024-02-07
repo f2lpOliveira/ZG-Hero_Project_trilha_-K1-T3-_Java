@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="script.js" defer></script>
     <title>ToDo List</title>
 </head>
+
 <body class="p-3 m-0 border-0">
+
 <h1 class="text-center">ToDo List</h1>
 <hr>
+
 <form name="form1" action="#" method="post" class="row g-3 needs-validation" novalidate>
     <div class="col-md-6">
         <div class="row g-3">
@@ -20,11 +23,13 @@
                 <input type="text" id="nome" class="form-control" placeholder="Nome da tarefa..." required>
                 <div class="invalid-feedback">Informe o nome da tarefa.</div>
             </div>
+
             <div class="col-md-12">
                 <label for="dataTermino" class="form-label">Data de Término</label>
                 <input type="date" id="dataTermino" class="form-control" pattern="\d{4}" required>
                 <div class="invalid-feedback">Informe a data de término da tarefa!</div>
             </div>
+
             <div class="col-md-12">
                 <label for="prioridade" class="form-label">Prioridade</label>
                 <select id="prioridade" class="form-select" required>
@@ -37,6 +42,7 @@
                 </select>
                 <div class="invalid-feedback">Informe uma prioridade para a tarefa!</div>
             </div>
+
             <div class="col-md-12">
                 <label for="categoria" class="form-label">Categoria</label>
                 <select id="categoria" class="form-select">
@@ -45,6 +51,7 @@
                 </select>
                 <div class="invalid-feedback">Informe uma categoria para a tarefa!</div>
             </div>
+
             <div class="col-md-12">
                 <label for="status" class="form-label">Status</label>
                 <select id="status" class="form-select">
@@ -56,6 +63,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-md-6">
         <div class="col-md-12 h-100">
             <label for="descricao" class="form-label">Descrição</label>
@@ -63,9 +71,13 @@
             <div class="invalid-feedback">Informe uma descrição para a tarefa!</div>
         </div>
     </div>
+
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <input type="submit" class="btn btn-success me-md-2" value="Criar Tarefa" id="btnCriar">
     </div>
 </form>
+<hr/>
+
+<table class="table table-striped" id="tabela"></table>
 </body>
 </html>
