@@ -9,10 +9,9 @@
     <script src="script.js"></script>
     <title>ToDo List</title>
 </head>
-<body>
-<h1>ToDo List</h1>
+<body class="p-3 m-0 border-0">
+<h1 class="text-center">ToDo List</h1>
 <hr>
-
 <form name="form1" action="#" method="post" class="row g-3 needs-validation" novalidate>
     <div class="col-md-6">
         <div class="row g-3">
@@ -21,40 +20,52 @@
                 <input type="text" id="nome" class="form-control" placeholder="Nome da tarefa..." required>
                 <div class="invalid-feedback">Informe o nome da tarefa.</div>
             </div>
-
-            <label for="descricao">Descrição</label>
-            <input type="text" id="descricao">
-
-            <label for="dataTermino">Data de Término</label>
-            <input type="date" id="dataTermino" pattern="\d{4}">
-
-            <label for="prioridade">Prioridade</label>
-            <select id="prioridade">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-
-            <label for="categoria">Categoria</label>
-            <select id="categoria">
-                <option value="Casa" selected>Casa</option>
-                <option value="Trabalho">Trabalho</option>
-            </select>
-
-            <label for="status">Status</label>
-            <select id="status">
-                <option value="ToDo" selected>ToDo</option>
-                <option value="Doing">Doing</option>
-                <option value="Done">Done</option>
-            </select>
+            <div class="col-md-12">
+                <label for="dataTermino" class="form-label">Data de Término</label>
+                <input type="date" id="dataTermino" class="form-control" pattern="\d{4}" required>
+                <div class="invalid-feedback">Informe a data de término da tarefa!</div>
+            </div>
+            <div class="col-md-12">
+                <label for="prioridade" class="form-label">Prioridade</label>
+                <select id="prioridade" class="form-select" required>
+                    <option value="" disabled selected>Selecione uma prioridade...</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <div class="invalid-feedback">Informe uma prioridade para a tarefa!</div>
+            </div>
+            <div class="col-md-12">
+                <label for="categoria" class="form-label">Categoria</label>
+                <select id="categoria" class="form-select">
+                    <option value="Casa" selected>Casa</option>
+                    <option value="Trabalho">Trabalho</option>
+                </select>
+                <div class="invalid-feedback">Informe uma categoria para a tarefa!</div>
+            </div>
+            <div class="col-md-12">
+                <label for="status" class="form-label">Status</label>
+                <select id="status" class="form-select">
+                    <option value="ToDo" selected>ToDo</option>
+                    <option value="Doing">Doing</option>
+                    <option value="Done">Done</option>
+                </select>
+                <div class="invalid-feedback">Informe o status da tarefa!</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-12 h-100">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea type="text" id="descricao" class="form-control h-90" placeholder="Descreva aqui sua tarefa...." rows="3" required></textarea>
+            <div class="invalid-feedback">Informe uma descrição para a tarefa!</div>
         </div>
     </div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <input type="submit" class="btn btn-success me-md-2" value="Criar Tarefa" id="btnCriar">
     </div>
 </form>
-
 </body>
 </html>
