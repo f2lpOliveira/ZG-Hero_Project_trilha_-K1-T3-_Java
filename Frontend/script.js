@@ -48,10 +48,10 @@ function listarTabelaTarefas() {
 		<td>${tarefa.categoria}</td>
 		<td>${tarefa.status}</td>
 		<td>
-            <button type="button" class="btn btn-warning" id="${index}" onclick="editar(${index})">Editar</button>						
+            <button type="button" class="btn btn-warning" id="${index}" onclick="editarTarefa(${index})">Editar</button>						
         </td>
         <td>
-            <button type="button" class="btn btn-danger" id="${index}" onclick="excluir(${index})">Excluir</button>						
+            <button type="button" class="btn btn-danger" id="${index}" onclick="excluirTarefa(${index})">Excluir</button>						
         </td>
     `;
         document.querySelector("#tabela>tbody").appendChild(novaLinha);
@@ -59,11 +59,26 @@ function listarTabelaTarefas() {
     }
 }
 
-function excluir(index) {
+function excluirTarefa(index) {
     const bd_tarefas = getLocalStorage();
     bd_tarefas.splice(index, 1);
     setLocalStorage(bd_tarefas);
     listarTabelaTarefas()
+}
+
+function editarTarefa(index) {
+  const bd_tarefas = getLocalStorage();
+  const tarefa = bd_tarefas[index];
+  document.getElementById("nome").value = tarefa.nome;
+  document.getElementById("descricao").value = tarefa.descricao;
+  document.getElementById("dataTermino").value = tarefa.dataTermino;
+  document.getElementById("prioridade").value = tarefa.prioridade;
+  document.getElementById("categoria").value = tarefa.categoria;
+  document.getElementById("status").value = tarefa.status;
+
+  bd_tarefas.splice(index, 1);
+  setLocalStorage(bd_tarefas);
+  listarTabelaTarefas()
 }
 
 function limparTabelaTarefas() {
