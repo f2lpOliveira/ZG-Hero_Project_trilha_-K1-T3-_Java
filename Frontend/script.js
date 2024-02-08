@@ -59,6 +59,13 @@ function listarTabelaTarefas() {
     }
 }
 
+function excluir(index) {
+    const bd_tarefas = getLocalStorage();
+    bd_tarefas.splice(index, 1);
+    setLocalStorage(bd_tarefas);
+    listarTabelaTarefas()
+}
+
 function limparTabelaTarefas() {
     let elemento = document.querySelector("#tabela>tbody");
     while (elemento.firstChild) {
