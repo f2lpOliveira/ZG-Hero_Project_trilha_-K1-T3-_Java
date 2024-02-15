@@ -1,11 +1,9 @@
 package menu;
 
 import tarefas.Tarefa;
-
 import java.util.Scanner;
 
 public class MenuIterativo {
-    // Método para apresentar o menu
     public static void apresentacao() {
         Scanner scanner = new Scanner(System.in);
         int escolha;
@@ -18,11 +16,9 @@ public class MenuIterativo {
             System.out.println("4. Sair");
             System.out.print("Escolha uma opção (1-4): ");
 
-            // Lê a escolha do usuário
             escolha = scanner.nextInt();
-            scanner.nextLine(); // Consumir a quebra de linha pendente
+            scanner.nextLine();
 
-            // Executa a opção escolhida
             switch (escolha) {
                 case 1:
                     Tarefa.criarTarefa();

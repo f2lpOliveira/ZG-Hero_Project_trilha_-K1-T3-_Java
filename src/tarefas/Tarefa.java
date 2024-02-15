@@ -1,36 +1,53 @@
 package tarefas;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Tarefa {
-    // Atributos
     private final String nome;
     private final String descricao;
-    private final LocalDate dataDeTermino;
+    private final LocalDateTime dataHoraTermino;
     private final int prioridade;
     private final String categoria;
     private final String status;
-
     private final static List<Tarefa> listaDeTarefas = new ArrayList<>();
+    private final Timer timer;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    // Construtor
-    public Tarefa(String nome, String descricao, String dataDeTermino, int prioridade, String categoria, String status) {
+    public Tarefa(String nome, String descricao, String dataDeTermino, int horaTermino, int minutoTermino, int prioridade, String categoria, String status) {
         this.nome = nome;
         this.descricao = descricao;
-        this.dataDeTermino = LocalDate.parse(dataDeTermino, formatter);
+        LocalDate data = LocalDate.parse(dataDeTermino, formatter);
+        this.dataHoraTermino = LocalDateTime.of(data, LocalTime.of(horaTermino, minutoTermino));
         this.prioridade = prioridade;
         this.categoria = categoria;
         this.status = status;
+        this.timer = new Timer();
+        listaDeTarefas.add(this);
+        agendarAlarme();
     }
 
-    // Métodos da regra de negócio
-    // Método para criar uma tarefa
+    public boolean estaProximaDoTermino() {
+        LocalDateTime dataHoraNotificacao = LocalDateTime.now().plusMinutes(1);
+        return dataHoraNotificacao.isAfter(LocalDateTime.now()) && dataHoraNotificacao.isBefore(dataHoraTermino);
+    }
+
+    private void agendarAlarme() {
+        if (estaProximaDoTermino()) {
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    System.out.println("Alarme! A tarefa '" + nome + "' está próxima do término.");
+                }
+            }, java.util.Date.from(dataHoraTermino.atZone(java.time.ZoneId.systemDefault()).toInstant()));
+        }
+    }
+
     public static void criarTarefa() {
         Scanner scanner = new Scanner(System.in);
-
         System.out.print("Nome da tarefa: ");
         String nome = scanner.nextLine();
 
@@ -40,9 +57,15 @@ public class Tarefa {
         System.out.print("Data de término da tarefa (DD/MM/YYYY): ");
         String dataDeTermino = scanner.nextLine();
 
+        System.out.print("Hora de término da tarefa (0-23): ");
+        int horaTermino = scanner.nextInt();
+
+        System.out.print("Minuto de término da tarefa (0-59): ");
+        int minutoTermino = scanner.nextInt();
+
         System.out.print("Prioridade da tarefa (1-5): ");
         int prioridade = scanner.nextInt();
-        scanner.nextLine(); // Consumir a quebra de linha pendente
+        scanner.nextLine();
 
         System.out.print("Categoria da tarefa (Casa ou Trabalho): ");
         String categoria = scanner.nextLine();
@@ -50,16 +73,10 @@ public class Tarefa {
         System.out.print("Status da tarefa (ToDo, Doing ou Done): ");
         String status = scanner.nextLine();
 
-        // Criar uma nova instância de Tarefa
-        Tarefa novaTarefa = new Tarefa(nome, descricao, dataDeTermino, prioridade, categoria, status);
-
-        // Adicionar a nova tarefa à lista de tarefas
-        listaDeTarefas.add(novaTarefa);
-
+        Tarefa novaTarefa = new Tarefa(nome, descricao, dataDeTermino, horaTermino, minutoTermino, prioridade, categoria, status);
         System.out.println("Tarefa criada com sucesso!");
     }
 
-    // Método para listar tarefas
     public static void listarTarefas() {
         Scanner scanner = new Scanner(System.in);
 
@@ -71,7 +88,7 @@ public class Tarefa {
         System.out.print("Digite o número da opção desejada (1-4): ");
 
         int opcao = scanner.nextInt();
-        scanner.nextLine(); // Consumir a quebra de linha pendente
+        scanner.nextLine();
 
         switch (opcao) {
             case 1:
@@ -91,9 +108,7 @@ public class Tarefa {
         }
     }
 
-    // Método para listar tarefas por categoria, prioridade ou status
     public static void listarTodas() {
-        // Ordena a lista de tarefas com base na prioridade (decrescente)
         listaDeTarefas.sort(Comparator.comparingInt(Tarefa::getPrioridade).reversed());
 
         for (Tarefa tarefa : listaDeTarefas) {
@@ -146,7 +161,6 @@ public class Tarefa {
         }
     }
 
-    // Método para excluir uma tarefa com base no nome
     public static void excluirTarefa() {
         Scanner scanner = new Scanner(System.in);
 
@@ -158,37 +172,34 @@ public class Tarefa {
 
         boolean encontrou = false;
 
-        // Percorre a lista de tarefas
         while (iterator.hasNext()) {
             Tarefa novaTarefa = iterator.next();
 
-            // Verifica se o nome da tarefa coincide com o fornecido pelo usuário
             if (novaTarefa.getNome().equalsIgnoreCase(nomeTarefaExcluir)) {
                 iterator.remove();
                 encontrou = true;
                 System.out.println("Tarefa excluída com sucesso!");
-                break; // Se encontrou a tarefa, podemos sair do loop
+                break;
             }
         }
 
-        // Se não encontrou a tarefa
         if (!encontrou) {
             System.out.println("Tarefa não encontrada. Verifique o nome e tente novamente.");
         }
     }
 
-    // Método para retornar os dados da tarefa
     private static void exibirDetalhesTarefa(Tarefa tarefa) {
         System.out.println("Nome: " + tarefa.getNome());
         System.out.println("Descrição: " + tarefa.getDescricao());
         System.out.println("Data de Término: " + tarefa.getDataDeTermino());
+        System.out.println("Hora de Término: " + tarefa.getDataHoraTermino().getHour());
+        System.out.println("Minuto de Término: " + tarefa.getDataHoraTermino().getMinute());
         System.out.println("Prioridade: " + tarefa.getPrioridade());
         System.out.println("Categoria: " + tarefa.getCategoria());
         System.out.println("Status: " + tarefa.getStatus());
         System.out.println("---------------");
     }
 
-    // Métodos Getters e Setters
     public String getNome() {
         return nome;
     }
@@ -198,7 +209,11 @@ public class Tarefa {
     }
 
     public String getDataDeTermino() {
-        return formatter.format(dataDeTermino);
+        return formatter.format(dataHoraTermino);
+    }
+
+    public LocalDateTime getDataHoraTermino() {
+        return dataHoraTermino;
     }
 
     public int getPrioridade() {
