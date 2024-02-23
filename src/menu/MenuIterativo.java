@@ -1,43 +1,63 @@
 package menu;
 
 import tarefas.Tarefa;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuIterativo {
-    public static void apresentacao() {
-        Scanner scanner = new Scanner(System.in);
+
+    Scanner scanner = new Scanner(System.in);
+    boolean continuar = true;
+
+    public void apresentacao() {
         int escolha;
 
-        do {
-            System.out.println("----- Menu -----");
-            System.out.println("1. Criar nova tarefa");
-            System.out.println("2. Listar tarefas");
-            System.out.println("3. Excluir tarefas");
-            System.out.println("4. Sair");
-            System.out.print("Escolha uma opção (1-4): ");
+        while (continuar){
+            this.exibirOpcoes();
 
-            escolha = scanner.nextInt();
-            scanner.nextLine();
+            try {
+                escolha = this.entradaDados();
 
-            switch (escolha) {
-                case 1:
-                    Tarefa.criarTarefa();
-                    break;
-                case 2:
-                    Tarefa.listarTarefas();
-                    break;
-                case 3:
-                    Tarefa.excluirTarefa();
-                    break;
-                case 4:
-                    System.out.println("Saindo do programa. Até mais!");
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente.");
-                    break;
+                switch (escolha) {
+                    case 1:
+                        Tarefa.criarTarefa();
+                        continuar = false;
+                        break;
+                    case 2:
+                        Tarefa.listarTarefas();
+                        continuar = false;
+                        break;
+                    case 3:
+                        Tarefa.excluirTarefa();
+                        continuar = false;
+                        break;
+                    case 4:
+                        System.out.println("Saindo do programa. Até mais!");
+                        continuar = false;
+                        break;
+                    default:
+                        System.out.println("Opção inválida. Tente novamente.");
+                        continuar = false;
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número inteiro.");
+                scanner.nextLine();
             }
-        } while (escolha != 4);
+        }
     }
-
+    public void exibirOpcoes() {
+        System.out.println("----- Menu -----");
+        System.out.println("1. Criar nova tarefa");
+        System.out.println("2. Listar tarefas");
+        System.out.println("3. Excluir tarefas");
+        System.out.println("4. Sair");
+        System.out.print("Escolha uma opção (1-4): ");
+    }
+    public int entradaDados(){
+        System.out.print("Digite um número inteiro: ");
+        return scanner.nextInt();
+    }
 }
 
