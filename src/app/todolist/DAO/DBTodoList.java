@@ -11,4 +11,18 @@ public class DBTodoList {
     public List<Tarefa> getListaDeTarefas() {
         return listaDeTarefas;
     }
+
+    public void adicionarTarefa(Tarefa tarefa) {
+        listaDeTarefas.add(tarefa);
+    }
+
+    public boolean removerTarefa(String nomeTarefa) {
+        for (Tarefa tarefa : listaDeTarefas) {
+            if (tarefa.getNome().equalsIgnoreCase(nomeTarefa)) {
+                listaDeTarefas.remove(tarefa);
+                return true;
+            }
+        }
+        return false;
+    }
 }

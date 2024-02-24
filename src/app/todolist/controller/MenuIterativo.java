@@ -1,7 +1,5 @@
 package app.todolist.controller;
 
-import app.todolist.controller.Operacoes;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,7 +7,11 @@ public class MenuIterativo {
 
     Scanner scanner = new Scanner(System.in);
     boolean continuar = true;
-    Operacoes operacoes = new Operacoes();
+    Operacoes operacoes;
+
+    public MenuIterativo(Operacoes operacoes) {
+        this.operacoes = operacoes;
+    }
 
     public void apresentacao() {
         int escolha;
@@ -25,7 +27,7 @@ public class MenuIterativo {
                         operacoes.criarTarefa();
                         break;
                     case 2:
-                        operacoes.listarTarefas();
+                        operacoes.listarTodas();
                         break;
                     case 3:
                         operacoes.excluirTarefa();
@@ -44,6 +46,7 @@ public class MenuIterativo {
             }
         }
     }
+
     public void exibirOpcoes() {
         System.out.println("----- Menu -----");
         System.out.println("1. Criar nova tarefa");
@@ -52,6 +55,7 @@ public class MenuIterativo {
         System.out.println("4. Sair");
         System.out.print("Escolha uma opção (1-4): ");
     }
+
     public int entradaDados(){
         System.out.print("Digite um número inteiro: ");
         return scanner.nextInt();
