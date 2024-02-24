@@ -1,4 +1,4 @@
-package app.todolist.menu;
+package app.todolist.controller;
 
 import app.todolist.controller.Operacoes;
 
@@ -9,7 +9,6 @@ public class MenuIterativo {
 
     Scanner scanner = new Scanner(System.in);
     boolean continuar = true;
-
     Operacoes operacoes = new Operacoes();
 
     public void apresentacao() {
