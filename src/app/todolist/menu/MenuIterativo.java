@@ -1,6 +1,6 @@
-package menu;
+package app.todolist.menu;
 
-import tarefas.Tarefa;
+import app.todolist.controller.Operacoes;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -9,6 +9,8 @@ public class MenuIterativo {
 
     Scanner scanner = new Scanner(System.in);
     boolean continuar = true;
+
+    Operacoes operacoes = new Operacoes();
 
     public void apresentacao() {
         int escolha;
@@ -21,16 +23,13 @@ public class MenuIterativo {
 
                 switch (escolha) {
                     case 1:
-                        Tarefa.criarTarefa();
-                        continuar = false;
+                        operacoes.criarTarefa();
                         break;
                     case 2:
-                        Tarefa.listarTarefas();
-                        continuar = false;
+                        operacoes.listarTarefas();
                         break;
                     case 3:
-                        Tarefa.excluirTarefa();
-                        continuar = false;
+                        operacoes.excluirTarefa();
                         break;
                     case 4:
                         System.out.println("Saindo do programa. Até mais!");
@@ -38,7 +37,6 @@ public class MenuIterativo {
                         break;
                     default:
                         System.out.println("Opção inválida. Tente novamente.");
-                        continuar = false;
                         break;
                 }
             } catch (InputMismatchException e) {

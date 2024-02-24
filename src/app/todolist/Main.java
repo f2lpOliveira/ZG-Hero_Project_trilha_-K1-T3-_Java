@@ -1,6 +1,6 @@
 package app.todolist;
 
-import menu.MenuIterativo;
+import app.todolist.menu.MenuIterativo;
 
 public class Main {
     public static void main(String[] args) {
