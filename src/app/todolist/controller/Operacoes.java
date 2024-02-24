@@ -1,5 +1,6 @@
 package app.todolist.controller;
 
+import app.todolist.DAO.DBTodoList;
 import app.todolist.model.Tarefa;
 
 import java.time.LocalDate;
@@ -8,21 +9,29 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 public class Operacoes {
-
-    private final List<Tarefa> listaDeTarefas = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
     private final Timer timer = new Timer();
-    public Tarefa tarefa;
+    private final DBTodoList dbTodoList;
+
+    public Operacoes() {
+        this.dbTodoList = new DBTodoList();
+    }
 
     public void listarTodas() {
-        listaDeTarefas.forEach(tarefa::toString);
+        if(dbTodoList.getListaDeTarefas().isEmpty()){
+            System.out.println("A lista de tarefas está vazia.");
+        }else{
+            for (Tarefa tarefa : dbTodoList.getListaDeTarefas()) {
+                tarefa.toString(tarefa);
+            }
+        }
     }
 
     public void excluirTarefa() {
         listarTodas();
         System.out.print("Digite o nome da tarefa que deseja excluir: ");
         String nomeTarefaExcluir = scanner.nextLine();
-        Iterator<Tarefa> iterator = listaDeTarefas.iterator();
+        Iterator<Tarefa> iterator = dbTodoList.getListaDeTarefas().iterator();
         while (iterator.hasNext()) {
             Tarefa tarefa = iterator.next();
             if (tarefa.getNome().equalsIgnoreCase(nomeTarefaExcluir)) {
@@ -63,7 +72,7 @@ public class Operacoes {
         LocalDateTime dataHoraTermino = LocalDateTime.of(LocalDate.parse(dataDeTermino, DateTimeFormatter.ofPattern("dd/MM/yyyy")), LocalTime.of(horaTermino, minutoTermino)).minusHours(2);
 
         Tarefa novaTarefa = new Tarefa(nome, descricao, dataHoraTermino, prioridade, categoria, status);
-        listaDeTarefas.add(novaTarefa);
+        dbTodoList.getListaDeTarefas().add(novaTarefa);
         agendarAlarme(novaTarefa);
         System.out.println("Tarefa criada com sucesso!");
     }
@@ -119,7 +128,7 @@ public class Operacoes {
         String categoria = scanner.nextLine();
         boolean encontrou = false;
 
-        for (Tarefa tarefa : listaDeTarefas) {
+        for (Tarefa tarefa : dbTodoList.getListaDeTarefas()) {
             if (tarefa.getCategoria().equalsIgnoreCase(categoria)) {
                 tarefa.toString(tarefa);
                 encontrou = true;
@@ -136,7 +145,7 @@ public class Operacoes {
         int prioridade = scanner.nextInt();
         boolean encontrou = false;
 
-        for (Tarefa tarefa : listaDeTarefas) {
+        for (Tarefa tarefa : dbTodoList.getListaDeTarefas()) {
             if (tarefa.getPrioridade() == prioridade) {
                 tarefa.toString(tarefa);
                 encontrou = true;
@@ -153,7 +162,7 @@ public class Operacoes {
         String status = scanner.nextLine();
         boolean encontrou = false;
 
-        for (Tarefa tarefa : listaDeTarefas) {
+        for (Tarefa tarefa : dbTodoList.getListaDeTarefas()) {
             if (tarefa.getStatus().equalsIgnoreCase(status)) {
                 tarefa.toString(tarefa);
                 encontrou = true;
