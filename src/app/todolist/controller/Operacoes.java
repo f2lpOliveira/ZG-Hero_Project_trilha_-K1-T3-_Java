@@ -3,24 +3,60 @@ package app.todolist.controller;
 import app.todolist.DAO.DBTodoList;
 import app.todolist.model.Tarefa;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Operacoes {
-    private final Scanner scanner = new Scanner(System.in);
-    private final Timer timer = new Timer();
+    private final Scanner scanner;
+    private final Timer timer;
     private final DBTodoList dbTodoList;
 
-    public Operacoes() {
-        this.dbTodoList = new DBTodoList();
+    public Operacoes(Scanner scanner, Timer timer, DBTodoList dbTodoList) {
+        this.scanner = scanner;
+        this.timer = timer;
+        this.dbTodoList = dbTodoList;
     }
 
     public void listarTodas() {
-        if(dbTodoList.getListaDeTarefas().isEmpty()){
+        System.out.println("Escolha uma opção para listar tarefas:");
+        System.out.println("1. Por Categoria");
+        System.out.println("2. Por Prioridade");
+        System.out.println("3. Por Status");
+        System.out.println("4. Todas");
+        System.out.print("Digite o número da opção desejada (1-4): ");
+
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (opcao) {
+            case 1:
+                listarPorCategoria();
+                break;
+            case 2:
+                listarPorPrioridade();
+                break;
+            case 3:
+                listarPorStatus();
+                break;
+            case 4:
+                listarTodasSemOpcao();
+                break;
+            default:
+                System.out.println("Opção inválida. Tente novamente.");
+        }
+    }
+
+    public void listarTodasSemOpcao() {
+        if (dbTodoList.getListaDeTarefas().isEmpty()) {
             System.out.println("A lista de tarefas está vazia.");
-        }else{
+        } else {
             for (Tarefa tarefa : dbTodoList.getListaDeTarefas()) {
                 tarefa.toString(tarefa);
             }
@@ -31,16 +67,11 @@ public class Operacoes {
         listarTodas();
         System.out.print("Digite o nome da tarefa que deseja excluir: ");
         String nomeTarefaExcluir = scanner.nextLine();
-        Iterator<Tarefa> iterator = dbTodoList.getListaDeTarefas().iterator();
-        while (iterator.hasNext()) {
-            Tarefa tarefa = iterator.next();
-            if (tarefa.getNome().equalsIgnoreCase(nomeTarefaExcluir)) {
-                iterator.remove();
-                System.out.println("Tarefa excluída com sucesso!");
-                return;
-            }
+        if (dbTodoList.removerTarefa(nomeTarefaExcluir)) {
+            System.out.println("Tarefa excluída com sucesso!");
+        } else {
+            System.out.println("Tarefa não encontrada. Verifique o nome e tente novamente.");
         }
-        System.out.println("Tarefa não encontrada. Verifique o nome e tente novamente.");
     }
 
     public void criarTarefa() {
@@ -69,61 +100,19 @@ public class Operacoes {
         System.out.print("Status da tarefa (ToDo, Doing ou Done): ");
         String status = scanner.nextLine();
 
-        LocalDateTime dataHoraTermino = LocalDateTime.of(LocalDate.parse(dataDeTermino, DateTimeFormatter.ofPattern("dd/MM/yyyy")), LocalTime.of(horaTermino, minutoTermino)).minusHours(2);
+        LocalDateTime dataHoraTermino = LocalDateTime.of(
+                LocalDate.parse(dataDeTermino, DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                LocalTime.of(horaTermino, minutoTermino)
+        );
 
         Tarefa novaTarefa = new Tarefa(nome, descricao, dataHoraTermino, prioridade, categoria, status);
-        dbTodoList.getListaDeTarefas().add(novaTarefa);
+        dbTodoList.adicionarTarefa(novaTarefa);
         agendarAlarme(novaTarefa);
         System.out.println("Tarefa criada com sucesso!");
     }
 
-    public void listarTarefas() {
-        System.out.println("Escolha uma opção para listar tarefas:");
-        System.out.println("1. Por Categoria");
-        System.out.println("2. Por Prioridade");
-        System.out.println("3. Por Status");
-        System.out.println("4. Todas");
-        System.out.print("Digite o número da opção desejada (1-4): ");
 
-        int opcao = scanner.nextInt();
-        scanner.nextLine();
-
-        switch (opcao) {
-            case 1:
-                listarPorCategoria();
-                break;
-            case 2:
-                listarPorPrioridade();
-                break;
-            case 3:
-                listarPorStatus();
-                break;
-            case 4:
-                listarTodas();
-                break;
-            default:
-                System.out.println("Opção inválida. Tente novamente.");
-        }
-    }
-
-    private void agendarAlarme(Tarefa tarefa) {
-        if (estaProximaDoTermino(tarefa)) {
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("Alarme! A tarefa '" + tarefa.getNome() + "' está próxima do término.");
-                }
-            }, java.util.Date.from(tarefa.getDataHoraTermino().atZone(java.time.ZoneId.systemDefault()).toInstant()));
-        }
-    }
-
-    private boolean estaProximaDoTermino(Tarefa tarefa) {
-        LocalDateTime dataHoraAtual = LocalDateTime.now();
-        LocalDateTime dataHoraTermino = tarefa.getDataHoraTermino();
-        return dataHoraAtual.isBefore(dataHoraTermino);
-    }
-
-    private void listarPorCategoria() {
+    public void listarPorCategoria() {
         System.out.print("Digite a categoria desejada (Casa ou Trabalho): ");
         String categoria = scanner.nextLine();
         boolean encontrou = false;
@@ -140,7 +129,7 @@ public class Operacoes {
         }
     }
 
-    private void listarPorPrioridade() {
+    public void listarPorPrioridade() {
         System.out.print("Digite a prioridade desejada (1-5): ");
         int prioridade = scanner.nextInt();
         boolean encontrou = false;
@@ -157,7 +146,7 @@ public class Operacoes {
         }
     }
 
-    private void listarPorStatus() {
+    public void listarPorStatus() {
         System.out.print("Digite o status desejado (ToDo, Doing ou Done): ");
         String status = scanner.nextLine();
         boolean encontrou = false;
@@ -172,5 +161,25 @@ public class Operacoes {
         if (!encontrou) {
             System.out.println("Não há nenhuma tarefa com o status " + status);
         }
+    }
+
+    private void agendarAlarme(Tarefa tarefa) {
+        if (estaProximaDoTermino(tarefa)) {
+            LocalDateTime dataHoraTermino = tarefa.getDataHoraTermino().minusHours(2);
+            long delay = Duration.between(LocalDateTime.now(), dataHoraTermino).toMillis();
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    System.out.println("Alarme! A tarefa '" + tarefa.getNome() + "' está próxima do término.");
+                }
+            }, delay);
+        }
+    }
+
+    private boolean estaProximaDoTermino(Tarefa tarefa) {
+        LocalDateTime dataHoraAtual = LocalDateTime.now();
+        LocalDateTime dataHoraTermino = tarefa.getDataHoraTermino();
+        return dataHoraAtual.isBefore(dataHoraTermino);
     }
 }
