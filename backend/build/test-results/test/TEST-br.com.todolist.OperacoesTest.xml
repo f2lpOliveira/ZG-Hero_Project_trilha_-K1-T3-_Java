@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="br.com.todolist.OperacoesTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-09T09:29:16" hostname="ubuntu" time="0.066">
+  <properties/>
+  <testcase name="givenEmptyTodoList_whenCreateTask_thenTaskIsAddedToList()" classname="br.com.todolist.OperacoesTest" time="0.066"/>
+  <system-out><![CDATA[Nome da tarefa: Descrição da tarefa: Data de término da tarefa (DD/MM/YYYY): Hora de término da tarefa (0-23): Minuto de término da tarefa (0-59): Prioridade da tarefa (1-5): Categoria da tarefa (Casa ou Trabalho): Status da tarefa (ToDo, Doing ou Done): Tarefa criada com sucesso!
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
